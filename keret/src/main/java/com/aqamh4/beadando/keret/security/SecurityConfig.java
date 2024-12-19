@@ -37,21 +37,29 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(configurer -> configurer
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(configurer -> configurer
+                        .requestMatchers("/").permitAll()
                         .requestMatchers("/users").hasRole("MODERATOR")
-                        .requestMatchers("/users").hasRole("ADMIN")
+                        .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                ).formLogin(form->
-                        form
-                                .loginPage("/")
-                                .loginProcessingUrl("/authenticatedUser")
-                                .permitAll())
-                .logout(logout->
-                        logout
-                                .permitAll())
-                .exceptionHandling(configurer->
-                        configurer.accessDeniedPage("/access-denied"));
+                )
+                .formLogin(form -> form
+                        .loginPage("/show-register-form")
+                        .loginProcessingUrl("/authenticatedUser")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                )
+                .exceptionHandling(configurer -> configurer
+                        .accessDeniedPage("/access-denied")
+                );
+
         return http.build();
     }
 }
