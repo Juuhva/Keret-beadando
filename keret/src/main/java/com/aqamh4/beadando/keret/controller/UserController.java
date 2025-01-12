@@ -46,26 +46,11 @@ public class UserController {
         model.addAttribute("user", user);
         return "login-form";
     }
-        @PostMapping("/authenticate")
-        public String authenticate(@RequestParam("username") String username,
-                                   @RequestParam("password") String password, Model model) {
-            User user = userService.findByUsername(username);
-            if (user != null && user.getPassword().equals(password)) {
-                return "redirect:/home-page";
-            } else {
-                model.addAttribute("error", "Hibás felhasználónév vagy jelszó!");
-                return "login-page";
-            }
-        }
+
     @PostMapping("/user/save")
     public String save(@ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/home-page";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
 }

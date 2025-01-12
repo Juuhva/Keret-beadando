@@ -82,12 +82,36 @@
 </header>
 
 <nav>
-  <a href="#rolunk">Rólunk</a>
-  <a href="#etlap">Étlap</a>
-  <a href="#kapcsolat">Kapcsolat</a>
-  <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Regisztráció</a>
-  <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Kijelentkezés</a>
-  <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Bejelentkezés</a>
+  <div style="align-content: center; float: left">
+    <a href="#rolunk">Rólunk</a>
+    <a href="#etlap">Étlap</a>
+    <a href="#kapcsolat">Kapcsolat</a>
+  </div>
+  <div style="float: right">
+  <div sec:authorize="isAuthenticated()">
+    <p style="color: white">Felhasználó:  <span sec:authentication="name"></span></p>
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+      <button
+              type="submit"
+              style="
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: white;
+            font-size: inherit;
+            text-decoration: none;"
+              onmouseover="this.style.textDecoration='underline'"
+              onmouseout="this.style.textDecoration='none'">
+        Kijelentkezés
+      </button>
+    </form>
+  </div>
+  <div sec:authorize="isAnonymous()">
+    <p><a th:href="@{/register}">Regisztráció</a></p>
+    <p><a th:href="@{/login}">Bejelentkezés</a></p>
+  </div>
+  </div>
 </nav>
 
 <div class="hero">

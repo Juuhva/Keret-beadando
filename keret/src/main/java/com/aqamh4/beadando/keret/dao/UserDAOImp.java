@@ -26,14 +26,6 @@ public class UserDAOImp implements UserDAO{
     }
 
     @Override
-    public User findByUsername(String username) {
-        TypedQuery<User> query = entityManager.createQuery("FROM User WHERE username = :username", User.class);
-        query.setParameter("username", username);
-        return query.getResultList().stream().findFirst().orElse(null);
-    }
-
-
-    @Override
     public User findById(int id) {
         return entityManager.find(User.class, id);
     }

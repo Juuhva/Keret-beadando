@@ -1,6 +1,8 @@
 
 package com.aqamh4.beadando.keret.security;
 
+import com.aqamh4.beadando.keret.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,43 +13,44 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private UserService userService;
+
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
-        UserDetails john = User.builder()
-                .username("john")
-                .password("{noop}test123")
-                .roles("EMPLOYEE")
-                .build();
-        UserDetails mary = User.builder()
-                .username("mary")
-                .password("{noop}test123")
-                .roles("EMPLOYEE", "MANAGER")
-                .build();
-        UserDetails susan = User.builder()
-                .username("susan")
-                .password("{noop}test123")
-                .roles("EMPLOYEE", "MANAGER", "ADMIN")
-                .build();
+        List<UserDetails> users = userService.findAll().stream()
+                .map(user -> {
+                    String role = user.getRole() != null ? user.getRole().name() : "USER";
+                    return User.builder()
+                            .username(user.getUsername())
+                            .password("{noop}" + user.getPassword())
+                            .roles(role)
+                            .build();
+                })
+                .collect(Collectors.toList());
 
-        return new InMemoryUserDetailsManager(john, mary, susan);
+        return new InMemoryUserDetailsManager(users);
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(configurer -> configurer
-                        .requestMatchers("/","/register","/user/save").permitAll()
+                        .requestMatchers("/","/register","/user/save","/login","/authenticate","/logout").permitAll()
                         .requestMatchers("/users").hasRole("MODERATOR")
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/authenticatedUser")
+                        .loginProcessingUrl("/authenticate")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
