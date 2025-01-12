@@ -21,9 +21,17 @@ public class UserDAOImp implements UserDAO{
 
     @Override
     public List<User> findAll() {
-        TypedQuery<User> query = entityManager.createQuery("from Users", User.class);
+        TypedQuery<User> query = entityManager.createQuery("from User", User.class);
         return query.getResultList();
     }
+
+    @Override
+    public User findByUsername(String username) {
+        TypedQuery<User> query = entityManager.createQuery("FROM User WHERE username = :username", User.class);
+        query.setParameter("username", username);
+        return query.getResultList().stream().findFirst().orElse(null);
+    }
+
 
     @Override
     public User findById(int id) {
@@ -33,13 +41,15 @@ public class UserDAOImp implements UserDAO{
     @Override
     @Transactional
     public User save(User user) {
-        User dbUser = entityManager.merge(user);
-        return dbUser;    }
+        return entityManager.merge(user);
+    }
 
     @Override
     @Transactional
     public void deleteById(int id) {
-        entityManager.remove(findById(id));
-
+        User user = findById(id);
+        if (user != null) {
+            entityManager.remove(user);
+        }
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,7 +85,9 @@
   <a href="#rolunk">Rólunk</a>
   <a href="#etlap">Étlap</a>
   <a href="#kapcsolat">Kapcsolat</a>
-  <a href="/show-register-form">Regisztráció</a>
+  <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Regisztráció</a>
+  <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Kijelentkezés</a>
+  <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Bejelentkezés</a>
 </nav>
 
 <div class="hero">

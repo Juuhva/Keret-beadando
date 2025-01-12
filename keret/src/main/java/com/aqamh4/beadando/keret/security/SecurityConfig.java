@@ -40,13 +40,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(configurer -> configurer
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/","/register","/user/save").permitAll()
                         .requestMatchers("/users").hasRole("MODERATOR")
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/show-register-form")
+                        .loginPage("/login")
                         .loginProcessingUrl("/authenticatedUser")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
