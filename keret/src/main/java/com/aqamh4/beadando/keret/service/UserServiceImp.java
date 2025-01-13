@@ -1,6 +1,6 @@
 package com.aqamh4.beadando.keret.service;
 
-import com.aqamh4.beadando.keret.dao.UserDAO;
+import com.aqamh4.beadando.keret.dao.User.UserDAO;
 import com.aqamh4.beadando.keret.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

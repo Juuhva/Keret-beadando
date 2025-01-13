@@ -1,6 +1,6 @@
-package com.aqamh4.beadando.keret.dao;
+package com.aqamh4.beadando.keret.dao.Etel;
 
-import com.aqamh4.beadando.keret.entity.User;
+import com.aqamh4.beadando.keret.entity.Etel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -10,38 +10,37 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDAOImp implements UserDAO{
-
+class EtelDAOImp implements EtelDAO {
     private EntityManager entityManager;
 
     @Autowired
-    public UserDAOImp(EntityManager entityManager) {
+    public EtelDAOImp(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public List<User> findAll() {
-        TypedQuery<User> query = entityManager.createQuery("from User", User.class);
+    public List<Etel> findAll() {
+        TypedQuery<Etel> query = entityManager.createQuery("from Etelek", Etel.class);
         return query.getResultList();
     }
 
     @Override
-    public User findById(int id) {
-        return entityManager.find(User.class, id);
+    public Etel findById(int id) {
+        return entityManager.find(Etel.class, id);
     }
 
     @Override
     @Transactional
-    public User save(User user) {
-        return entityManager.merge(user);
+    public Etel save(Etel etel) {
+        return entityManager.merge(etel);
     }
 
     @Override
     @Transactional
     public void deleteById(int id) {
-        User user = findById(id);
-        if (user != null) {
-            entityManager.remove(user);
+        Etel etel = findById(id);
+        if (etel != null) {
+            entityManager.remove(etel);
         }
     }
 }

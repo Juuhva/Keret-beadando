@@ -10,11 +10,20 @@ public class Asztal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer asztal_szam;
+    private Integer asztalSzam;
 
-    private Integer szekek_szama;
+    private Integer szekekSzama;
 
-    private Boolean kinti_asztale;
+    private Boolean kintiAsztale;
+
+    public Asztal() {}
+
+    public Asztal(int id, Integer asztalSzam, Integer szekekSzama, Boolean kintiAsztale) {
+        this.id = id;
+        this.asztalSzam = asztalSzam;
+        this.szekekSzama = szekekSzama;
+        this.kintiAsztale = kintiAsztale;
+    }
 
     public int getId() {
         return id;
@@ -24,27 +33,27 @@ public class Asztal {
         this.id = id;
     }
 
-    public Integer getAsztal_szam() {
-        return asztal_szam;
+    public Integer getAsztalSzam() {
+        return asztalSzam;
     }
 
-    public void setAsztal_szam(Integer asztal_szam) {
-        this.asztal_szam = asztal_szam;
+    public void setAsztalSzam(Integer asztalSzam) {
+        this.asztalSzam = asztalSzam;
     }
 
-    public Integer getSzekek_szama() {
-        return szekek_szama;
+    public Integer getSzekekSzama() {
+        return szekekSzama;
     }
 
-    public void setSzekek_szama(Integer szekek_szama) {
-        this.szekek_szama = szekek_szama;
+    public void setSzekekSzama(Integer szekekSzama) {
+        this.szekekSzama = szekekSzama;
     }
 
-    public Boolean getKinti_asztale() {
-        return kinti_asztale;
+    public Boolean getKintiAsztale() {
+        return kintiAsztale;
     }
 
-    public void setKinti_asztale(Boolean kinti_asztale) {
-        this.kinti_asztale = kinti_asztale;
+    public void setKintiAsztale(Boolean kintiAsztale) {
+        this.kintiAsztale = kintiAsztale;
     }
 }

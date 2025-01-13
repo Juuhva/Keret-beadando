@@ -1,4 +1,4 @@
-package com.aqamh4.beadando.keret.dao;
+package com.aqamh4.beadando.keret.dao.Asztal;
 
 import com.aqamh4.beadando.keret.entity.Asztal;
 

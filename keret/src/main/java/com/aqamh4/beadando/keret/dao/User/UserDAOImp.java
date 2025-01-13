@@ -1,6 +1,6 @@
-package com.aqamh4.beadando.keret.dao;
+package com.aqamh4.beadando.keret.dao.User;
 
-import com.aqamh4.beadando.keret.entity.Asztal;
+import com.aqamh4.beadando.keret.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -10,36 +10,38 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AsztalDAOImp implements AsztalDAO{
+public class UserDAOImp implements UserDAO{
 
     private EntityManager entityManager;
 
     @Autowired
-    public AsztalDAOImp(EntityManager entityManager) {
+    public UserDAOImp(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public List<Asztal> findAll() {
-        TypedQuery<Asztal> query = entityManager.createQuery("from asztalok", Asztal.class);
+    public List<User> findAll() {
+        TypedQuery<User> query = entityManager.createQuery("from User", User.class);
         return query.getResultList();
     }
 
     @Override
-    public Asztal findById(int id) {
-        return entityManager.find(Asztal.class, id);
+    public User findById(int id) {
+        return entityManager.find(User.class, id);
     }
 
     @Override
     @Transactional
-    public Asztal save(Asztal asztal) {
-        Asztal dbAsztal = entityManager.merge(asztal);
-        return dbAsztal;
+    public User save(User user) {
+        return entityManager.merge(user);
     }
 
     @Override
     @Transactional
     public void deleteById(int id) {
-        entityManager.remove(findById(id));
+        User user = findById(id);
+        if (user != null) {
+            entityManager.remove(user);
+        }
     }
 }

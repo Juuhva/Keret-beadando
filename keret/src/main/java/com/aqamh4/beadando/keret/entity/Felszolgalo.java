@@ -11,7 +11,7 @@ public class Felszolgalo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String nev;
+    public Felszolgalo() {}
 
     public int getId() {
         return id;
@@ -21,11 +21,28 @@ public class Felszolgalo {
         this.id = id;
     }
 
-    public String getNev() {
-        return nev;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNev(String nev) {
-        this.nev = nev;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Felszolgalo(int id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    private String firstName;
+    private String lastName;
 }
