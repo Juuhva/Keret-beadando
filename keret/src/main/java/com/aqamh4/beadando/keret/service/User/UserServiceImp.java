@@ -1,4 +1,4 @@
-package com.aqamh4.beadando.keret.service;
+package com.aqamh4.beadando.keret.service.User;
 
 import com.aqamh4.beadando.keret.dao.User.UserDAO;
 import com.aqamh4.beadando.keret.entity.User;

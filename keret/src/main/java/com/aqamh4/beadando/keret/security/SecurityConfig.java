@@ -1,12 +1,10 @@
 
 package com.aqamh4.beadando.keret.security;
 
-import com.aqamh4.beadando.keret.service.UserService;
+import com.aqamh4.beadando.keret.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

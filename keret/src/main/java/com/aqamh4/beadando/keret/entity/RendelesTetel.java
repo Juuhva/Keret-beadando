@@ -5,16 +5,27 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "rendelestetelek")
 public class RendelesTetel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "rendeles_id", nullable = false)
+    private Rendeles rendeles;
+
+    @ManyToOne
+    @JoinColumn(name = "etel_id", nullable = false)
+    private Etel etel;
+
+    private int mennyiseg;
+
     public RendelesTetel() {}
 
-    public RendelesTetel(int id, String rendelesId, String etelId, String mennyiseg) {
+    public RendelesTetel(int id, Rendeles rendeles, Etel etel, int mennyiseg) {
         this.id = id;
-        this.rendelesId = rendelesId;
-        this.etelId = etelId;
+        this.rendeles = rendeles;
+        this.etel = etel;
         this.mennyiseg = mennyiseg;
     }
 
@@ -26,31 +37,27 @@ public class RendelesTetel {
         this.id = id;
     }
 
-    public String getRendelesId() {
-        return rendelesId;
+    public Rendeles getRendeles() {
+        return rendeles;
     }
 
-    public void setRendelesId(String rendelesId) {
-        this.rendelesId = rendelesId;
+    public void setRendeles(Rendeles rendeles) {
+        this.rendeles = rendeles;
     }
 
-    public String getEtelId() {
-        return etelId;
+    public Etel getEtel() {
+        return etel;
     }
 
-    public void setEtelId(String etelId) {
-        this.etelId = etelId;
+    public void setEtel(Etel etel) {
+        this.etel = etel;
     }
 
-    public String getMennyiseg() {
+    public int getMennyiseg() {
         return mennyiseg;
     }
 
-    public void setMennyiseg(String mennyiseg) {
+    public void setMennyiseg(int mennyiseg) {
         this.mennyiseg = mennyiseg;
     }
-
-    private String rendelesId;
-    private String etelId;
-    private String mennyiseg;
 }
