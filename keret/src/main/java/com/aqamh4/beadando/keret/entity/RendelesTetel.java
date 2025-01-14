@@ -18,6 +18,7 @@ public class RendelesTetel {
     @JoinColumn(name = "etel_id", nullable = false)
     private Etel etel;
 
+
     private int mennyiseg;
 
     public RendelesTetel() {}

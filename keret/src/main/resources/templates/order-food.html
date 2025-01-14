@@ -67,14 +67,14 @@
 
 <div class="container">
     <h3>Válasszon ételt és adja meg a rendelési adatokat</h3>
-    <form th:action="@{/order/save}" method="POST" th:object="${order}">
+    <form th:action="@{/order/save}" method="POST" th:object="${rendelesTetel}">
         <label for="food">Étel</label>
-        <select id="food" th:field="*{foodId}" class="form-control" required>
-            <option th:each="food : ${foods}" th:value="${food.id}" th:text="${food.etelnev}"></option>
+        <select id="food" th:field="*{etel.id}" class="form-control" required>
+            <option th:each="etel : ${etelek}" th:value="${etel.id}" th:text="${etel.etelnev}"></option>
         </select>
 
         <label for="quantity">Mennyiség</label>
-        <input type="number" id="quantity" th:field="*{quantity}" class="form-control" placeholder="Adja meg a mennyiséget" min="1" required>
+        <input type="number" id="quantity" th:field="*{mennyiseg}" class="form-control" placeholder="Adja meg a mennyiséget" min="1" required>
 
         <p class="summary">Teljes ár: <span id="totalPrice">0</span> Ft</p>
 
@@ -82,26 +82,6 @@
     </form>
 </div>
 
-<script>
-    const foodSelect = document.getElementById('food');
-    const quantityInput = document.getElementById('quantity');
-    const totalPriceSpan = document.getElementById('totalPrice');
-
-    const foodPrices = /*[[${foods}]]*/ [];
-
-    // Create a map of food IDs to their prices (replace server-side with Thymeleaf rendering)
-    // Example: const foodPrices = { 1: 1500, 2: 2000, 3: 2500 };
-
-    foodSelect.addEventListener('change', updateTotalPrice);
-    quantityInput.addEventListener('input', updateTotalPrice);
-
-    function updateTotalPrice() {
-        const selectedFoodId = foodSelect.value;
-        const quantity = parseInt(quantityInput.value) || 0;
-        const price = foodPrices[selectedFoodId] || 0;
-        totalPriceSpan.textContent = price * quantity;
-    }
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-9ndCyUa1zYmwTrdfyisT+2tF0YUWPeiZEX1TO3G9GcDf6ZkzHjcH2Dgk+FvUGSWj" crossorigin="anonymous"></script>
 </body>
