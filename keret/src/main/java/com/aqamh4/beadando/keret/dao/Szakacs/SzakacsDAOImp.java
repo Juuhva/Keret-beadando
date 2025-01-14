@@ -22,7 +22,7 @@ public class SzakacsDAOImp implements SzakacsDAO{
 
     @Override
     public List<Szakacs> findAll() {
-        TypedQuery<Szakacs> query = entityManager.createQuery("from Szakacsok", Szakacs.class);
+        TypedQuery<Szakacs> query = entityManager.createQuery("from Szakacs", Szakacs.class);
         return query.getResultList();
     }
 

@@ -10,7 +10,6 @@ public class Szakacs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Name("szakacs_id")
     private int id;
 
     public Szakacs() {}

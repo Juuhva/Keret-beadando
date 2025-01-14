@@ -20,7 +20,7 @@ class RendelesDAOImp implements RendelesDAO {
 
     @Override
     public List<Rendeles> findAll() {
-        TypedQuery<Rendeles> query = entityManager.createQuery("from Rendelesek", Rendeles.class);
+        TypedQuery<Rendeles> query = entityManager.createQuery("from Rendeles", Rendeles.class);
         return query.getResultList();
     }
 

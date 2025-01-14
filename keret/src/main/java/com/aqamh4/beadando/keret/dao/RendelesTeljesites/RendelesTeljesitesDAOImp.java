@@ -21,7 +21,7 @@ public class RendelesTeljesitesDAOImp implements RendelesTeljesitesDAO {
 
     @Override
     public List<Rendelesteljesites> findAll() {
-        TypedQuery<Rendelesteljesites> query = entityManager.createQuery("from Rendelesteljesitesek", Rendelesteljesites.class);
+        TypedQuery<Rendelesteljesites> query = entityManager.createQuery("from Rendelesteljesites", Rendelesteljesites.class);
         return query.getResultList();
     }
 

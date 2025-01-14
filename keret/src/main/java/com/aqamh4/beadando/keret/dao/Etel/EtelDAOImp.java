@@ -20,7 +20,7 @@ class EtelDAOImp implements EtelDAO {
 
     @Override
     public List<Etel> findAll() {
-        TypedQuery<Etel> query = entityManager.createQuery("from Etelek", Etel.class);
+        TypedQuery<Etel> query = entityManager.createQuery("from Etel", Etel.class);
         return query.getResultList();
     }
 

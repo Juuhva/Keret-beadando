@@ -21,7 +21,7 @@ public class SzakacsController {
     }
 
     @GetMapping("/add/szakacs")
-    public String showRegisterForm(Model model) {
+    public String showAddSzakacsForm(Model model) {
         Szakacs szakacs = new Szakacs();
         model.addAttribute("szakacs", szakacs);
         return "add-szakacs";

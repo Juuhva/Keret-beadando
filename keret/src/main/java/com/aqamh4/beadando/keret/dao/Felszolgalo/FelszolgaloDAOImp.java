@@ -20,7 +20,7 @@ class FelszolgaloDAOImp implements FelszolgaloDAO {
 
     @Override
     public List<Felszolgalo> findAll() {
-        TypedQuery<Felszolgalo> query = entityManager.createQuery("from Felszolgalok", Felszolgalo.class);
+        TypedQuery<Felszolgalo> query = entityManager.createQuery("from Felszolgalo", Felszolgalo.class);
         return query.getResultList();
     }
 
