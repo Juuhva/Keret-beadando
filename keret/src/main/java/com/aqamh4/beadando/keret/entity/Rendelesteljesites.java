@@ -6,25 +6,38 @@ import jakarta.persistence.*;
 @Table(name = "rendelesteljesitesek")
 public class Rendelesteljesites {
 
-    @EmbeddedId
-    private RendelesteljesitesId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private boolean teljesitett;
 
     @ManyToOne
-    @MapsId("rendeles_id")
-    @JoinColumn(name = "rendeles_id")
+    @JoinColumn(name = "rendeles_id", nullable = false)
     private Rendeles rendeles;
 
-    @ManyToOne
-    @MapsId("felszolgalo_id")
-    @JoinColumn(name = "felszolgalo_id")
-    private Felszolgalo felszolgalok;
+    public Rendelesteljesites(int id, boolean teljesitett, Rendeles rendeles) {
+        this.id = id;
+        this.teljesitett = teljesitett;
+        this.rendeles = rendeles;
+    }
 
-    public RendelesteljesitesId getId() {
+    public Rendelesteljesites() {}
+
+    public int getId() {
         return id;
     }
 
-    public void setId(RendelesteljesitesId id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isTeljesitett() {
+        return teljesitett;
+    }
+
+    public void setTeljesitett(boolean teljesitett) {
+        this.teljesitett = teljesitett;
     }
 
     public Rendeles getRendeles() {
@@ -33,13 +46,5 @@ public class Rendelesteljesites {
 
     public void setRendeles(Rendeles rendeles) {
         this.rendeles = rendeles;
-    }
-
-    public Felszolgalo getFelszolgalok() {
-        return felszolgalok;
-    }
-
-    public void setFelszolgalok(Felszolgalo felszolgalok) {
-        this.felszolgalok = felszolgalok;
     }
 }

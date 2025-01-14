@@ -13,12 +13,45 @@ public class Rendeles {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "asztal_id", nullable = false)
-    private Asztal asztal;
-
-    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "etel_id", nullable = false)
+    private Etel etel;
+
+    private int vegosszeg;
+    private int mennyiseg;
+
+
+    public int getVegosszeg() {
+        return vegosszeg;
+    }
+
+    public void setVegosszeg(int vegosszeg) {
+        this.vegosszeg = vegosszeg;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public Etel getEtel() {
+        return etel;
+    }
+
+    public void setEtel(Etel etel) {
+        this.etel = etel;
+    }
+
+    public int getMennyiseg() {
+        return mennyiseg;
+    }
 
     public User getUser() {
         return user;
@@ -28,37 +61,16 @@ public class Rendeles {
         this.user = user;
     }
 
-    private LocalDate datum;
-    public int getId() {
-        return id;
+    public void setMennyiseg(int mennyiseg) {
+        this.mennyiseg = mennyiseg;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Asztal getAsztal() {
-        return asztal;
-    }
-
-    public void setAsztal(Asztal asztal) {
-        this.asztal = asztal;
-    }
-
-    public LocalDate getDatum() {
-        return datum;
-    }
-
-    public void setDatum(LocalDate datum) {
-        this.datum = datum;
-    }
-
-    public Rendeles(int id, Asztal asztal, User user, LocalDate datum) {
-        this.id = id;
-        this.asztal = asztal;
-        this.user = user;
-        this.datum = datum;
-    }
-
     public Rendeles() {}
+
+    public Rendeles(int id, User user, Etel etel, int mennyiseg, int vegosszeg) {
+        this.id = id;
+        this.user = user;
+        this.etel = etel;
+        this.mennyiseg = mennyiseg;
+        this.vegosszeg = vegosszeg;
+    }
 }

@@ -65,45 +65,49 @@
     <h1>Ételrendelés</h1>
 </header>
 
-<div class="container">
+<div class="container mt-4">
     <h3>Válasszon ételt és adja meg a rendelési adatokat</h3>
-    <form th:action="@{/order/save}" method="POST" th:object="${rendelesTetel}">
-        <label for="food">Étel</label>
-        <select id="food" th:field="*{etel.id}" class="form-control" required onchange="updatePrice()">
-            <option th:each="etel : ${etelek}" th:value="${etel.id}" th:data-price="${etel.etelar}" th:text="${etel.etelnev}"></option>
-        </select>
+    <form th:action="@{/order/save}" method="POST" th:object="${rendeles}" onsubmit="return validateForm()">
+        <div class="mb-3">
+            <label for="food" class="form-label">Étel</label>
+            <select id="food" th:field="*{etel.id}" class="form-control" required onchange="updatePrice()">
+                <option th:each="etel : ${etelek}" th:value="${etel.id}" th:data-price="${etel.etelar}" th:text="${etel.etelnev}"></option>
+            </select>
+        </div>
 
-        <label for="quantity">Mennyiség</label>
-        <input type="number" id="quantity" th:field="*{mennyiseg}" class="form-control" placeholder="Adja meg a mennyiséget" min="1" required oninput="updatePrice()">
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Mennyiség</label>
+            <input type="number" id="quantity" th:field="*{mennyiseg}" class="form-control" min="1" required onchange="updatePrice()">
+        </div>
 
-        <p class="summary">Teljes ár: <span id="totalPrice">0</span> Ft</p>
+        <div class="mb-3">
+            <label for="totalPrice" class="form-label">Teljes ár</label>
+            <input type="text" id="totalPrice" th:field="*{vegosszeg}" class="form-control" readonly>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Rendelés leadása</button>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Mentés</button>
+        </div>
     </form>
 </div>
 
 
 <script>
     function updatePrice() {
-        const foodSelect = document.getElementById("food");
+        const foodSelect = document.getElementById('food');
         const selectedOption = foodSelect.options[foodSelect.selectedIndex];
+        const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+        const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+        document.getElementById('totalPrice').value = (price * quantity);
+    }
 
-        console.log(foodSelect)
-        console.log(selectedOption)
-
-        const foodPrice = parseFloat(selectedOption.getAttribute("data-price")) || 0;
-
-        console.log(foodPrice)
-
-        const quantity = parseInt(document.getElementById("quantity").value) || 0;
-
-        console.log(quantity)
-
-        const totalPrice = foodPrice * quantity;
-
-        console.log(totalPrice)
-
-        document.getElementById("totalPrice").textContent = totalPrice;
+    function validateForm() {
+        const totalPrice = parseFloat(document.getElementById('totalPrice').value) || 0;
+        if (totalPrice <= 0) {
+            alert('Kérjük, adjon meg érvényes mennyiséget és válasszon ételt!');
+            return false;
+        }
+        return true;
     }
 </script>
 

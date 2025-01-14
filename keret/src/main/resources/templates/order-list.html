@@ -106,24 +106,21 @@
 <header>
     <h1>Üdvözlünk Éttermünkben!</h1>
 </header>
-
-<div class="content" id="orders">
-    <h2>Rendelések</h2>
-    <a href="/order/item">Új tétel hozzáadása</a>
-    <div class="orders">
-        <div class="order-item">
-            <p><strong>Étel:</strong> Marhahúsos burger</p>
-            <p><strong>Mennyiség:</strong> 2</p>
-            <p><strong>Teljes ár:</strong> 7000 Ft</p>
-        </div>
-        <div class="order-item">
-            <p><strong>Étel:</strong> Tejszínes gombás tészta</p>
-            <p><strong>Mennyiség:</strong> 1</p>
-            <p><strong>Teljes ár:</strong> 2900 Ft</p>
+<div class="container mt-4">
+    <div class="content" id="orders">
+        <h2>Rendelések</h2>
+        <a href="/order/item" class="btn btn-secondary mb-3">Új tétel hozzáadása</a>
+        <form action="/order/list/save" method="post">
+            <button type="submit" class="add-order">Rendelés leadáse</button>
+        </form>
+        <div class="orders">
+            <div class="order-item" th:each="item : ${orderItems}">
+                <p><strong>Étel:</strong> <span th:text="${item.etel.etelnev}"></span></p>
+                <p><strong>Mennyiség:</strong> <span th:text="${item.mennyiseg}"></span></p>
+                <p><strong>Teljes ár:</strong> <span th:text="${item.vegosszeg}"></span> Ft</p>
+            </div>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>
