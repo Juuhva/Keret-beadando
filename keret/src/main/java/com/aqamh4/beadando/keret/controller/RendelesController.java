@@ -35,6 +35,14 @@ public class RendelesController {
         RendelesTetel rendelesTetel = new RendelesTetel();
         model.addAttribute("etelek", etelService.findAll());
         model.addAttribute("rendelesTetel", rendelesTetel);
+        return "order-list";
+    }
+
+    @GetMapping("/order/item")
+    public String showOrderItemForm(Model model) {
+        RendelesTetel rendelesTetel = new RendelesTetel();
+        model.addAttribute("etelek", etelService.findAll());
+        model.addAttribute("rendelesTetel", rendelesTetel);
         return "order-food";
     }
 
@@ -43,6 +51,6 @@ public class RendelesController {
         Etel etel = etelService.findById(rendelesTetel.getEtel().getId());
         rendelesTetel.setEtel(etel);
         rendelesTetelService.save(rendelesTetel);
-        return "redirect:/";
+        return "redirect:/order";
     }
 }

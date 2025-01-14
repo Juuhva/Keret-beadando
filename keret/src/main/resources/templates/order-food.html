@@ -69,12 +69,12 @@
     <h3>Válasszon ételt és adja meg a rendelési adatokat</h3>
     <form th:action="@{/order/save}" method="POST" th:object="${rendelesTetel}">
         <label for="food">Étel</label>
-        <select id="food" th:field="*{etel.id}" class="form-control" required>
-            <option th:each="etel : ${etelek}" th:value="${etel.id}" th:text="${etel.etelnev}"></option>
+        <select id="food" th:field="*{etel.id}" class="form-control" required onchange="updatePrice()">
+            <option th:each="etel : ${etelek}" th:value="${etel.id}" th:data-price="${etel.etelar}" th:text="${etel.etelnev}"></option>
         </select>
 
         <label for="quantity">Mennyiség</label>
-        <input type="number" id="quantity" th:field="*{mennyiseg}" class="form-control" placeholder="Adja meg a mennyiséget" min="1" required>
+        <input type="number" id="quantity" th:field="*{mennyiseg}" class="form-control" placeholder="Adja meg a mennyiséget" min="1" required oninput="updatePrice()">
 
         <p class="summary">Teljes ár: <span id="totalPrice">0</span> Ft</p>
 
@@ -82,6 +82,30 @@
     </form>
 </div>
 
+
+<script>
+    function updatePrice() {
+        const foodSelect = document.getElementById("food");
+        const selectedOption = foodSelect.options[foodSelect.selectedIndex];
+
+        console.log(foodSelect)
+        console.log(selectedOption)
+
+        const foodPrice = parseFloat(selectedOption.getAttribute("data-price")) || 0;
+
+        console.log(foodPrice)
+
+        const quantity = parseInt(document.getElementById("quantity").value) || 0;
+
+        console.log(quantity)
+
+        const totalPrice = foodPrice * quantity;
+
+        console.log(totalPrice)
+
+        document.getElementById("totalPrice").textContent = totalPrice;
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-9ndCyUa1zYmwTrdfyisT+2tF0YUWPeiZEX1TO3G9GcDf6ZkzHjcH2Dgk+FvUGSWj" crossorigin="anonymous"></script>
 </body>
