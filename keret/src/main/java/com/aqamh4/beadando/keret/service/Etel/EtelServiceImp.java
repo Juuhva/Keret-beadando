@@ -31,4 +31,9 @@ public class EtelServiceImp implements EtelService {
     public void deleteById(int id) {
         etelDAO.deleteById(id);
     }
+
+    @Override
+    public boolean update(Etel etel) {
+        return etelDAO.update(etel);
+    }
 }

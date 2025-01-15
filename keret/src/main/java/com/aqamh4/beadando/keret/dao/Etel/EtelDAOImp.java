@@ -43,4 +43,11 @@ class EtelDAOImp implements EtelDAO {
             entityManager.remove(etel);
         }
     }
+
+    @Override
+    @Transactional
+    public boolean update(Etel etel) {
+        Etel updatedEtel = entityManager.merge(etel);
+        return updatedEtel != null;
+    }
 }

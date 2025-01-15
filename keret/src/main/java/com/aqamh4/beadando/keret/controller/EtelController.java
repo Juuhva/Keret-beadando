@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -29,6 +30,20 @@ public class EtelController {
         List<Etel> etelek = etelService.findAll();
         model.addAttribute("etelek", etelek);
         return "menu-list";
+    }
+
+    @GetMapping("/menu/update")
+    public String showUpdadteMenu(Model model) {
+        List<Etel> etelek = etelService.findAll();
+        model.addAttribute("etelek", etelek);
+        return "update-menu";
+    }
+
+    @GetMapping("/menu/{id}/update")
+    public String showUpdateMenuForm(@PathVariable("id") int id, Model model) {
+        Etel etelModositas = etelService.findById(id);
+        model.addAttribute("etelModositas", etelModositas);
+        return "update-menu";
     }
 
     @GetMapping("/add/food")

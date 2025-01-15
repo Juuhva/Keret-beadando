@@ -9,4 +9,5 @@ public interface EtelDAO {
     Etel findById(int id);
     Etel save(Etel etel);
     void deleteById(int id);
+    boolean update(Etel etel);
 }

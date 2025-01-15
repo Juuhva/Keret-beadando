@@ -86,8 +86,9 @@
     <a href="#rolunk">Rólunk</a>
     <a href="/menu">Étlap</a>
     <a href="#kapcsolat">Kapcsolat</a>
-    <a href="/order">Ételrendelés</a>
-    <a href="/add/food" sec:authorize="isAuthenticated()">Étel hozzáadása</a>
+    <a href="/order" sec:authorize="isAuthenticated()">Ételrendelés</a>
+    <a href="/add/food" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">Étel hozzáadása</a>
+    <a href="/add/szakacs" sec:authorize="hasRole('ROLE_ADMIN')">Szakács felvétele</a>
   </div>
   <div style="float: right">
   <div sec:authorize="isAuthenticated()">

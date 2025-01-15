@@ -44,8 +44,8 @@ public class SecurityConfig {
                         .requestMatchers("/order","/order/item","/","/register",
                                 "/user/save","/login","/authenticate","/logout",
                                 "/order/list/save","/order/save","/menu").permitAll()
-                        .requestMatchers("/users").hasRole("MODERATOR")
-                        .requestMatchers("/admin","/add/szakacs","/szakacs/save","/add/food","/food/save").hasRole("ADMIN")
+                        .requestMatchers("/users","/add/food","/food/save").hasAnyRole("MODERATOR","ADMIN")
+                        .requestMatchers("/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
