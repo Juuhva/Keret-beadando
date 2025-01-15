@@ -3,6 +3,8 @@ package com.aqamh4.beadando.keret.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "rendelesek")
@@ -12,25 +14,16 @@ public class Rendeles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private Date datum;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "etel_id", nullable = false)
-    private Etel etel;
+    @OneToMany(mappedBy = "rendeles", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RendelesTetel> rendelesTetelek;
 
     private int vegosszeg;
-    private int mennyiseg;
-
-
-    public int getVegosszeg() {
-        return vegosszeg;
-    }
-
-    public void setVegosszeg(int vegosszeg) {
-        this.vegosszeg = vegosszeg;
-    }
 
     public int getId() {
         return id;
@@ -40,17 +33,12 @@ public class Rendeles {
         this.id = id;
     }
 
-
-    public Etel getEtel() {
-        return etel;
+    public Date getDatum() {
+        return datum;
     }
 
-    public void setEtel(Etel etel) {
-        this.etel = etel;
-    }
-
-    public int getMennyiseg() {
-        return mennyiseg;
+    public void setDatum(Date datum) {
+        this.datum = datum;
     }
 
     public User getUser() {
@@ -61,16 +49,29 @@ public class Rendeles {
         this.user = user;
     }
 
-    public void setMennyiseg(int mennyiseg) {
-        this.mennyiseg = mennyiseg;
+    public List<RendelesTetel> getRendelesTetelek() {
+        return rendelesTetelek;
     }
-    public Rendeles() {}
 
-    public Rendeles(int id, User user, Etel etel, int mennyiseg, int vegosszeg) {
-        this.id = id;
-        this.user = user;
-        this.etel = etel;
-        this.mennyiseg = mennyiseg;
+    public void setRendelesTetelek(List<RendelesTetel> rendelesTetelek) {
+        this.rendelesTetelek = rendelesTetelek;
+    }
+
+    public int getVegosszeg() {
+        return vegosszeg;
+    }
+
+    public void setVegosszeg(int vegosszeg) {
         this.vegosszeg = vegosszeg;
     }
+
+    public Rendeles(int id, Date datum, User user, List<RendelesTetel> rendelesTetelek, int vegosszeg) {
+        this.id = id;
+        this.datum = datum;
+        this.user = user;
+        this.rendelesTetelek = rendelesTetelek;
+        this.vegosszeg = vegosszeg;
+    }
+
+    public Rendeles() {}
 }

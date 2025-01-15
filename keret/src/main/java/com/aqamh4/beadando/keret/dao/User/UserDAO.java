@@ -8,5 +8,6 @@ public interface UserDAO {
     List<User> findAll();
     User findById(int id);
     User save(User user);
+    User findByUsername(String username);
     void deleteById(int id);
 }

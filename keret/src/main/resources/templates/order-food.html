@@ -67,7 +67,7 @@
 
 <div class="container mt-4">
     <h3>Válasszon ételt és adja meg a rendelési adatokat</h3>
-    <form th:action="@{/order/save}" method="POST" th:object="${rendeles}" onsubmit="return validateForm()">
+    <form th:action="@{/order/save}" method="POST" th:object="${rendelesTetel}" onsubmit="return validateForm()">
         <div class="mb-3">
             <label for="food" class="form-label">Étel</label>
             <select id="food" th:field="*{etel.id}" class="form-control" required onchange="updatePrice()">

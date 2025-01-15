@@ -110,7 +110,7 @@
     <div class="content" id="orders">
         <h2>Rendelések</h2>
         <a href="/order/item" class="btn btn-secondary mb-3">Új tétel hozzáadása</a>
-        <form action="/order/list/save" method="post">
+        <form th:action="@{/order/list/save}" method="post">
             <button type="submit" class="add-order">Rendelés leadáse</button>
         </form>
         <div class="orders">

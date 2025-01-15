@@ -2,6 +2,8 @@ package com.aqamh4.beadando.keret.service.Rendeles;
 
 import com.aqamh4.beadando.keret.dao.Rendeles.RendelesDAO;
 import com.aqamh4.beadando.keret.entity.Rendeles;
+import com.aqamh4.beadando.keret.entity.RendelesTetel;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +26,16 @@ public class RendelesServiceImp implements RendelesService {
     }
 
     @Override
-    public Rendeles save(Rendeles rendeles) {
+    @Transactional
+    public Rendeles save(Rendeles rendeles, List<RendelesTetel> rendelesTetelek) {
+        rendeles.setRendelesTetelek(rendelesTetelek);
+        rendelesTetelek.forEach(rendelesTetel -> rendelesTetel.setRendeles(rendeles));
         return rendelesDAO.save(rendeles);
     }
 
+
     @Override
+    @Transactional
     public void deleteById(int id) {
         rendelesDAO.deleteById(id);
     }

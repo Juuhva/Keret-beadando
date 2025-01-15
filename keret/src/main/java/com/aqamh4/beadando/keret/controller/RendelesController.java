@@ -3,11 +3,8 @@ package com.aqamh4.beadando.keret.controller;
 import com.aqamh4.beadando.keret.entity.*;
 import com.aqamh4.beadando.keret.service.Etel.EtelService;
 import com.aqamh4.beadando.keret.service.Rendeles.RendelesService;
-import com.aqamh4.beadando.keret.service.RendelesTeljesites.RendelesTeljesitesService;
 import com.aqamh4.beadando.keret.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,63 +20,61 @@ import java.util.List;
 @SessionAttributes("orderItems")
 public class RendelesController {
 
-
-    RendelesService rendelesService;
-    RendelesTeljesitesService rendelesTeljesitesService;
-    EtelService etelService;
-    UserService userService;
-
+    private final RendelesService rendelesService;
+    private final EtelService etelService;
+    private final UserService userService;
 
     @Autowired
-    public RendelesController(RendelesService rendelesService,
-                              RendelesTeljesitesService rendelesTeljesitesService, EtelService etelService) {
+    public RendelesController(RendelesService rendelesService, EtelService etelService, UserService userService) {
         this.rendelesService = rendelesService;
-        this.rendelesTeljesitesService = rendelesTeljesitesService;
         this.etelService = etelService;
+        this.userService = userService;
     }
 
     @ModelAttribute("orderItems")
-    public List<Rendeles> initializeOrderItems() {
+    public List<RendelesTetel> initializeOrderItems() {
         return new ArrayList<>();
     }
 
     @PostMapping("/order/save")
-    public String saveOrderToList(@ModelAttribute("rendeles") Rendeles rendeles,
-                             @ModelAttribute("orderItems") List<Rendeles> orderItems) {
-        Etel etel = etelService.findById(rendeles.getEtel().getId());
-        rendeles.setEtel(etel);
-
-        rendeles.setVegosszeg(rendeles.getMennyiseg() * etel.getEtelar());
-
-        orderItems.add(rendeles);
+    public String saveOrderItem(@ModelAttribute("rendelesTetel") RendelesTetel rendelesTetel,
+                                @ModelAttribute("orderItems") List<RendelesTetel> orderItems) {
+        orderItems.add(rendelesTetel);
         return "redirect:/order";
     }
 
     @PostMapping("/order/list/save")
-    public String saveOrder(@ModelAttribute("rendeles") Rendeles rendeles) {
-        Etel etel = etelService.findById(rendeles.getEtel().getId());
-        rendeles.setEtel(etel);
-        rendeles.setVegosszeg(rendeles.getMennyiseg() * etel.getEtelar());
-        User user = userService.findById(rendeles.getUser().getId());
+    public String saveOrder(@ModelAttribute("orderItems") List<RendelesTetel> orderItems, Principal principal) {
+        String userName = principal.getName();
+        User user = userService.findByUsername(userName);
+        Rendeles rendeles = new Rendeles();
         rendeles.setUser(user);
-        rendelesService.save(rendeles);
+        orderItems.forEach(item -> item.setRendeles(rendeles));
+        rendeles.setRendelesTetelek(orderItems);
+        rendelesService.save(rendeles, orderItems);
+        orderItems.clear();
         return "redirect:/order";
     }
 
     @GetMapping("/order")
     public String showOrderForm(Model model) {
-        Rendeles rendeles = new Rendeles();
+        RendelesTetel rendelesTetel = new RendelesTetel();
         model.addAttribute("etelek", etelService.findAll());
-        model.addAttribute("rendeles", rendeles);
+        model.addAttribute("rendelesTetel", rendelesTetel);
         return "order-list";
     }
 
     @GetMapping("/order/item")
     public String showOrderItemForm(Model model) {
-        Rendeles rendeles = new Rendeles();
+        RendelesTetel rendelesTetel = new RendelesTetel();
         model.addAttribute("etelek", etelService.findAll());
-        model.addAttribute("rendeles", rendeles);
+        model.addAttribute("rendelesTetel", rendelesTetel);
         return "order-food";
     }
 
+    @GetMapping("/order/list")
+    public String showOrderList(Model model, @ModelAttribute("orderItems") List<RendelesTetel> orderItems) {
+        model.addAttribute("orderItems", orderItems);
+        return "order-list";
+    }
 }

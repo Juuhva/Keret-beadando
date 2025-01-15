@@ -5,12 +5,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class UserDAOImp implements UserDAO{
+public class UserDAOImp implements UserDAO {
 
     private EntityManager entityManager;
 
@@ -34,6 +35,11 @@ public class UserDAOImp implements UserDAO{
     @Transactional
     public User save(User user) {
         return entityManager.merge(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return entityManager.find(User.class, username);
     }
 
     @Override
