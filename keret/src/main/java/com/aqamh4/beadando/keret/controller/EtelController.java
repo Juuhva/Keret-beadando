@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class EtelController {
     EtelService etelService;
@@ -20,6 +22,13 @@ public class EtelController {
     public EtelController(EtelService etelService, SzakacsService szakacsService) {
         this.etelService = etelService;
         this.szakacsService = szakacsService;
+    }
+
+    @GetMapping("/menu")
+    public String showMenu(Model model) {
+        List<Etel> etelek = etelService.findAll();
+        model.addAttribute("etelek", etelek);
+        return "menu-list";
     }
 
     @GetMapping("/add/food")
