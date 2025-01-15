@@ -68,7 +68,7 @@
 
         <label for="szakacs">Szakács</label>
         <select id="szakacs" th:field="*{szakacs.id}" class="form-control" required>
-            <option th:each="szakacs : ${szakacsok}" th:value="${szakacs.id}" th:text="${szakacs.firstName + ' ' + szakacs.lastName}"></option>
+            <option th:each="szakacs : ${szakacsok}" th:value="${szakacs.id}" th:text="${szakacs.lastName + ' ' + szakacs.firstName}"></option>
         </select>
 
         <label for="price">Ár</label>

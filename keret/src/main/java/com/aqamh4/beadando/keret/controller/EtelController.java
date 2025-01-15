@@ -7,10 +7,7 @@ import com.aqamh4.beadando.keret.service.Szakacs.SzakacsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,9 +39,29 @@ public class EtelController {
     @GetMapping("/menu/{id}/update")
     public String showUpdateMenuForm(@PathVariable("id") int id, Model model) {
         Etel etelModositas = etelService.findById(id);
+        model.addAttribute("szakacsok", szakacsService.findAll());
         model.addAttribute("etelModositas", etelModositas);
         return "update-menu";
     }
+
+    @PostMapping("/menu/{id}/save")
+    public String saveUpdatedMenu(@PathVariable("id") int id,
+                                  @RequestParam("etelnev") String etelnev,
+                                  @RequestParam("leiras") String leiras,
+                                  @RequestParam("etelar") int etelar,
+                                  @RequestParam("szakacs") int szakacsId) {
+        Etel etel = etelService.findById(id);
+        Szakacs szakacs = szakacsService.findById(szakacsId);
+
+        etel.setEtelnev(etelnev);
+        etel.setLeiras(leiras);
+        etel.setEtelar(etelar);
+        etel.setSzakacs(szakacs);
+
+        etelService.update(etel);
+        return "redirect:/menu";
+    }
+
 
     @GetMapping("/add/food")
     public String showAddFoodForm(Model model) {

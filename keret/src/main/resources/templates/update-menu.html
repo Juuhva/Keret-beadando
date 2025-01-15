@@ -110,29 +110,40 @@
     <div class="menu">
         <div class="menu-item" th:each="etel : ${etelek}">
             <h3 th:text="${etel.etelnev}"></h3>
+            <p><strong>Szakács:</strong> <span th:text="${etel.szakacs.lastName + ' ' + etel.szakacs.firstName}" ></span></p>
             <p th:text="${etel.leiras}"></p>
             <p><strong>Ár:</strong> <span th:text="${etel.etelar}"></span> Ft</p>
-            <a class="update-button" th:href="@{/menu/{id}/update(id=${etel.id})}">Frissítés</a>
+            <a class="update-button" style="text-underline: none" th:href="@{/menu/{id}/update(id=${etel.id})}">Módosítás</a>
         </div>
     </div>
 
     <div th:if="${etelModositas != null}">
         <h2>Étel módosítása</h2>
-        <form th:action="@{/menu/{id}/save}" method="post">
+        <form th:action="@{/menu/{id}/save(id=${etelModositas.id})}" method="post">
             <input type="hidden" name="id" th:value="${etelModositas.id}">
-            <label for="etelnev">Food Name</label>
+
+            <label for="etelnev">Étel</label>
             <input type="text" id="etelnev" name="etelnev" th:value="${etelModositas.etelnev}">
 
-            <label for="leiras">Description</label>
+            <label for="leiras">Leírás</label>
             <textarea id="leiras" name="leiras" th:value="${etelModositas.leiras}"></textarea>
 
-            <label for="etelar">Price</label>
+            <label for="etelar">Ár</label>
             <input type="number" id="etelar" name="etelar" th:value="${etelModositas.etelar}">
 
-            <button type="submit">Update Food</button>
+            <label for="szakacs">Szakács</label>
+            <select id="szakacs" name="szakacs">
+                <option th:each="szakacs : ${szakacsok}"
+                        th:value="${szakacs.id}"
+                        th:text="${szakacs.lastName + ' ' + szakacs.firstName}"
+                        th:selected="${etelModositas.szakacs != null and etelModositas.szakacs.id == szakacs.id}"></option>
+            </select>
+
+            <button type="submit">Mentés</button>
         </form>
     </div>
 </div>
+
 
 
 </body>

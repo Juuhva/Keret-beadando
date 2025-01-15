@@ -88,6 +88,7 @@
     <a href="#kapcsolat">Kapcsolat</a>
     <a href="/order" sec:authorize="isAuthenticated()">Ételrendelés</a>
     <a href="/add/food" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">Étel hozzáadása</a>
+    <a href="/menu/update" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">Ételek módosítása</a>
     <a href="/add/szakacs" sec:authorize="hasRole('ROLE_ADMIN')">Szakács felvétele</a>
   </div>
   <div style="float: right">
