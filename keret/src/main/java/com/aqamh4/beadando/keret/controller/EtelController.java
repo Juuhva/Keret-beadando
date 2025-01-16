@@ -62,7 +62,6 @@ public class EtelController {
         return "redirect:/menu";
     }
 
-
     @GetMapping("/add/food")
     public String showAddFoodForm(Model model) {
         Etel etel = new Etel();

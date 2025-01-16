@@ -14,6 +14,8 @@ public class RendelesServiceImp implements RendelesService {
 
     @Autowired
     private RendelesDAO rendelesDAO;
+    @Autowired
+    private RendelesRepository rendelesRepository;
 
     @Override
     public List<Rendeles> findAll() {
@@ -33,6 +35,15 @@ public class RendelesServiceImp implements RendelesService {
         return rendelesDAO.save(rendeles);
     }
 
+    @Override
+    public List<RendelesTetel> findOrderById(int id) {
+        return rendelesRepository.findOrderById(id);
+    }
+
+    @Override
+    public List<Rendeles> findOrderByUserId(int userId) {
+        return rendelesRepository.findOrderByUserId(userId);
+    }
 
     @Override
     @Transactional

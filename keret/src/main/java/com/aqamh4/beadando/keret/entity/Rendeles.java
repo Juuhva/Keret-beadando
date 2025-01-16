@@ -73,5 +73,7 @@ public class Rendeles {
         this.vegosszeg = vegosszeg;
     }
 
-    public Rendeles() {}
+    public Rendeles() {
+        this.datum = new Date();
+    }
 }

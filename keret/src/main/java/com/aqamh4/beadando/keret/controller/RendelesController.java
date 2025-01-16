@@ -2,15 +2,17 @@ package com.aqamh4.beadando.keret.controller;
 
 import com.aqamh4.beadando.keret.entity.*;
 import com.aqamh4.beadando.keret.service.Etel.EtelService;
+import com.aqamh4.beadando.keret.service.Rendeles.RendelesRepository;
 import com.aqamh4.beadando.keret.service.Rendeles.RendelesService;
 import com.aqamh4.beadando.keret.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -77,5 +79,26 @@ public class RendelesController {
     public String showOrderList(Model model, @ModelAttribute("orderItems") List<RendelesTetel> orderItems) {
         model.addAttribute("orderItems", orderItems);
         return "order-list";
+    }
+
+    @GetMapping("/orders")
+    public String listUserOrders(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        String userName = userDetails.getUsername();
+        User user = userService.findByUsername(userName);
+        List<Rendeles> rendelesek = rendelesService.findOrderByUserId(user.getId());
+        model.addAttribute("rendelesek", rendelesek);
+
+        return "show-orders";
+    }
+
+    @GetMapping("/orders/{id}")
+    public String orderDetails(@PathVariable int id, Model model) {
+        Rendeles rendeles = rendelesService.findById(id);
+        List<RendelesTetel> orderItems = rendelesService.findOrderById(id);
+
+        model.addAttribute("rendeles", rendeles);
+        model.addAttribute("orderItems", orderItems);
+
+        return "order-details";
     }
 }

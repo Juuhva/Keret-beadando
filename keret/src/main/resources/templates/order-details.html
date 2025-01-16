@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Details</title>
+</head>
+<body>
+<h2 th:text="'Rendelés #' + ${rendeles.id}"></h2>
+<p><strong>Dátum:</strong> <span th:text="${rendeles.datum}"></span></p>
+<p><strong>Teljes összeg:</strong> <span th:text="${rendeles.vegosszeg}"></span> Ft</p>
+
+<h3>Rendelés tételek:</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Étel</th>
+        <th>Szakács</th>
+        <th>Mennyiség</th>
+        <th>Összeg</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${orderItems}">
+        <td th:text="${item.etel.etelnev}"></td>
+        <td th:text="${item.etel.szakacs.lastName + ' ' + item.etel.szakacs.firstName}"></td>
+        <td th:text="${item.mennyiseg}"></td>
+        <td th:text="${item.etel.etelar * item.mennyiseg}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
